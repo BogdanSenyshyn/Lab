@@ -1,3 +1,4 @@
+'use strict'
 global.api = {};
 api.utils = {};
 api.requires = {
@@ -7,27 +8,27 @@ api.requires = {
   sleep : require('system-sleep')
 };
 
+//Для розбірчивості(optional)
 api.utils.sleep = function(){
-  let sleep = api.requires.sleep;
+  const sleep = api.requires.sleep;
   console.log('Waiting..');
   sleep(1000);
 };
 
-//Searching for the element of an array in a text file with writing to user its quantity in the file
+//Searching for the element of an array in a text file
 api.utils.SearchText = function(array){
-  let rd = api.requires.rdsync;
-  let string = '';
-  let fs = api.requires.fs;
-  console.log('\nCalling a func for finding elements of the arr in a text file!\n')
-  let Path = rd.question('Prompt the path here! ');
-  fs.readFile(('./' + Path), 'utf8', function(err, contents) {
+  const rd = api.requires.rdsync;
+  const fs = api.requires.fs;
+  console.log('\nFinding elements of the arr in a text file!\n')
+  let path = rd.question('Prompt the path here! ');
+  fs.readFile(('./' + path), 'utf8', function(err, contents) {
     if (err) {console.log('Invalid file!'); return -1; };
-    console.log('Quantity of the string in the text of the ' + Path + ' file');
+    console.log('Quantity of the string in the text of the ' + path + ' file');
     array.forEach(item => {
-      let n = '';
+      let n;
       if (contents.includes(item)) n = 'Contains';
-      else n = 'Doesn"t contain'
-      console.log(item + ' -> ' + n);
+      else n = 'Doesn\'t contain'
+      console.log(item + ' => ' + n);
     });
   });
   api.utils.sleep();
@@ -36,7 +37,7 @@ api.utils.SearchText = function(array){
 //Realization of sdbm hash-function for the elements of an array
 api.utils.Hash = function(array) {
   let object = {};
-  console.log('\nCalling a hashing func & giving you the hash-table with hashes & the elements of the array!\n')
+  console.log('\nHashing & giving you the hash-table!\n')
   array.forEach(item => {
     let hash = 0, i = item.length;
     if (i === 0) return hash;
@@ -52,16 +53,14 @@ api.utils.Hash = function(array) {
 //Searching for words in hash-table using a hash
 api.utils.Search = function(array) {
   let rd = api.requires.rdsync;
-  let object = {};
-  api.utils.Hash(array);
   console.log('\nCalling a searching with a hash func!\n')
-  let Hash = rd.question('Prompt the hash here! ');
-  if (Hash in api.utils.Hash.obj){
+  let hash = rd.question('Prompt the hash here! ');
+  if (hash in api.utils.Hash.obj){
     Object.keys(api.utils.Hash.obj).forEach(item => {
-    if (item == Hash) console.log('Your value is -> ' + api.utils.Hash.obj[item]);
+    if (item == hash) console.log('Your value => ' + api.utils.Hash.obj[item]);
     });
   }
-  else (console.log('\nNo hash found!\n'))
+  else (console.log('\nNo hash found!'));
   api.utils.sleep();
 };
 

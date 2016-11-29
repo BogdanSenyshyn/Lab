@@ -1,37 +1,25 @@
+'use strict'
 const arr = require('./array.js');
-
-//Task 1 - generating an array of 25 strings (drinks)
-console.log('Our array -> ' + arr + '\n');
-
-//Task 2
-let blank = ' ';
-let filtered = []; //our array
-arr.forEach(item => {if (item.indexOf(blank) < 0) filtered.push(item);});
-console.log('Our filtered array -> ' + filtered +'\n');
-
-//Task 3
-let copy = []; //creating a copy
-arr.forEach(item => { copy.push(item); });
-let sorted = arr.sort().reverse(); //our array
-console.log('Our sorted array -> ' + sorted + '\n');
-
-//Task 4.1
-let elements = []; //our array
-copy.forEach(item => {
-  elements.push('\nIn [' + item + '] array' + ' the elements are: '+ item.split(' '));
+let narray = []; let obj = {}; const blank = ' ';
+//1 Task
+console.log('Our array => \n' + arr);
+//2 Task
+narray = arr.filter(item => { return item.indexOf(blank) < 0 });
+console.log('Our filtered array => \n' + narray + '\n');
+//3 Task
+narray = arr.sort().reverse();
+console.log('Our sorted array => \n' + narray + '\n');
+//4.1 Task
+arr.forEach(item => { obj[item.split(blank)] = 'from ' + item + ' word'; });
+console.log('Object of words elements => \n' + JSON.stringify(obj, null, '\t'));
+//4.2 Task
+narray = [];
+arr.forEach(item => {
+  let obj = {}
+  for (let i in item){
+    if (!([item[i]] in obj)) obj[item[i]] = 1;
+    else obj[item[i]]++;
+  };
+  narray.push('\nIn ' + item + ' word:  ' + JSON.stringify(obj, '\n'));
 });
-console.log('Array of the words that are used in the array -> ');
-elements.forEach(item => {console.log(item)});
-
-//4.2
-let string = '';
-copy.forEach(item => { string += item; });
-let obj = {}
-for (let i in string){
-  if (!([string[i]] in obj)) obj[string[i]] = 1;
-  else obj[string[i]]++;
-};
-let frequency = []; //our array
-Object.keys(obj).forEach(item => {if (item !== ' ') frequency.push(item + ':' + obj[item])});
-console.log('Array of chars that are used in the array and their frequency (the prompt is also the char) -> ');
-frequency.forEach(item => {console.log(item)});
+console.log('Frequency of characters => ' + narray);
